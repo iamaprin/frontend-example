@@ -1,0 +1,5 @@
+import $ = require('jquery');
+
+$(function() {
+	// 
+});
