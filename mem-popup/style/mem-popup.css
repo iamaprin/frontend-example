@@ -1,0 +1,56 @@
+
+.mem-popup * {
+	box-sizing: border-box;;
+}
+
+.mem-popup {
+	position: relative;
+	width: 600px;
+	height: 300px;
+	border: 1px solid #000000;
+}
+
+.mem-popup>div {
+	position: absolute;
+	right: 0;
+	left: 0;
+}
+
+.mp-header {
+	top: 0;
+	height: 30px;
+	background: #cccccc;
+}
+
+.mp-content {
+	top: 30px;
+	bottom: 30px;
+	background: #aaaaaa;
+}
+
+.mp-footer {
+	height: 30px;
+	bottom: 0;
+}
+
+.mp-content>div {
+	position: absolute;
+	top: 0;
+	bottom: 0;
+}
+
+.mp-content-left {
+	left: 0;
+	width: 100px;
+	background: #333333;
+}
+
+.mp-content-middle {
+	background: #666666;
+}
+
+.mp-content-right {
+	right: 0;
+	width: 100px;
+	background: #999999;
+}

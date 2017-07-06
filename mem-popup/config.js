@@ -1,4 +1,4 @@
-var require = {
+require.config({
 	baseUrl: './',
 	shim: {
 
@@ -6,4 +6,4 @@ var require = {
 	paths: {
 		'jquery': 'lib/jquery-3.2.1'
 	}
-};
+});
