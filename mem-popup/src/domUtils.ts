@@ -3,6 +3,7 @@ const NodeType = {
 	LINK: 'link'
 }
 
+
 export interface DivEntity {
 	class: string,
 	id?: string
