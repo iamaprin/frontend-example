@@ -3,8 +3,12 @@
  */
 
 import $ = require('jquery');
-import * as domUtils from './domUtils'
-import * as ajax from './ajax'
+import * as domUtils from './domUtils';
+import * as ajax from './ajax';
+import * as apis from './apis';
+
+// requirejs
+import 'ztree'
 
 function init() {
 	buildMain();
@@ -12,19 +16,36 @@ function init() {
 }
 
 function initDeptTree() : void {
-
-	getDepts().done(_init);
+	apis.listDepts().done(_init);
 
 	function _init(resp : ajax.ApiResponse) : void {
-		console.log(resp);
+		buildTree(resp.data);
 	}
 }
 
-function getDepts() : JQuery.jqXHR<ajax.ApiResponse> {
-	return $.getJSON('./data/tree-dept.json');
+function buildTree(data : any) : void {
+	let $tree = $('#ztree');
+
+	let setting = {
+		data: {
+			simpleData: {
+				enable: true
+			}
+		},
+		callback: {
+			onClick: onClick
+		}
+	}
+	$.fn.zTree.init($tree, setting, data);
+
+	function onClick(event: Event, treeId: String, treeNode: JSON) {
+		console.log(arguments);
+	}
+
 }
 
 function buildMain() : void {
+	$('head').append(domUtils.buildStylesheet('./lib/ztree/css/metroStyle/metroStyle.css'));
 	$('head').append(domUtils.buildStylesheet('./style/mem-popup.css'));
 	insertNode($('body'), nodes);
 }
@@ -48,6 +69,11 @@ function insertNode($container: JQuery, node: Node) : void {
 		$childNode.text(text);
 	}
 
+	let id = node.id;
+	if (id) {
+		$childNode.attr('id', id);
+	}
+
 	let childNodes = node.childNodes;
 	if (childNodes) {
 		childNodes.forEach(element => {
@@ -61,6 +87,7 @@ function insertNode($container: JQuery, node: Node) : void {
 interface Node {
 	tag: string,
 	class: string,
+	id?: string,
 	value?: string,
 	text?: string,
 	childNodes?: Array<Node>
@@ -81,6 +108,13 @@ const nodes : Node = {
 				{
 					tag: 'div',
 					class: 'mp-content-left',
+					childNodes: [
+						{
+							tag: 'div',
+							class: 'mp-tree-container ztree',
+							id: 'ztree'
+						}
+					]
 				},
 				{
 					tag: 'div',

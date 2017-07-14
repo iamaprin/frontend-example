@@ -1,22 +1,37 @@
 /**
  * @author iamaprin
  */
-define(["require", "exports", "jquery", "./domUtils"], function (require, exports, $, domUtils) {
+define(["require", "exports", "jquery", "./domUtils", "./apis", "ztree"], function (require, exports, $, domUtils, apis) {
     "use strict";
     function init() {
         buildMain();
         initDeptTree();
     }
     function initDeptTree() {
-        getDepts().done(_init);
+        apis.listDepts().done(_init);
         function _init(resp) {
-            console.log(resp);
+            buildTree(resp.data);
         }
     }
-    function getDepts() {
-        return $.getJSON('./data/tree-dept.json');
+    function buildTree(data) {
+        let $tree = $('#ztree');
+        let setting = {
+            data: {
+                simpleData: {
+                    enable: true
+                }
+            },
+            callback: {
+                onClick: onClick
+            }
+        };
+        $.fn.zTree.init($tree, setting, data);
+        function onClick(event, treeId, treeNode) {
+            console.log(arguments);
+        }
     }
     function buildMain() {
+        $('head').append(domUtils.buildStylesheet('./lib/ztree/css/metroStyle/metroStyle.css'));
         $('head').append(domUtils.buildStylesheet('./style/mem-popup.css'));
         insertNode($('body'), nodes);
     }
@@ -35,6 +50,10 @@ define(["require", "exports", "jquery", "./domUtils"], function (require, export
         let text = node.text;
         if (text) {
             $childNode.text(text);
+        }
+        let id = node.id;
+        if (id) {
+            $childNode.attr('id', id);
         }
         let childNodes = node.childNodes;
         if (childNodes) {
@@ -59,6 +78,13 @@ define(["require", "exports", "jquery", "./domUtils"], function (require, export
                     {
                         tag: 'div',
                         class: 'mp-content-left',
+                        childNodes: [
+                            {
+                                tag: 'div',
+                                class: 'mp-tree-container ztree',
+                                id: 'ztree'
+                            }
+                        ]
                     },
                     {
                         tag: 'div',
@@ -146,4 +172,3 @@ define(["require", "exports", "jquery", "./domUtils"], function (require, export
         init: init
     };
 });
-//# sourceMappingURL=mem-popup.js.map
