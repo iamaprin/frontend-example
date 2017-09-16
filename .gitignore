@@ -1,3 +1,2 @@
-
-mem-popup/node_modules/.bin/tsc
-mem-popup/node_modules/typescript/lib/typescriptServices.js
+mem-popup/node_modules
+mem-popup/.idea
