@@ -17,6 +17,8 @@ import 'ztree'
  */
 export class MemPopup extends EventDispatcher {
 
+	private selected: string[] = [];
+
 	/**
 	 * 初始化
 	 * 
@@ -182,7 +184,7 @@ const nodes: domEntity.Node = {
 					childNodes: [
 						{
 							tag: 'div',
-							class: 'mp-selectable',
+							class: 'mp-selected',
 							childNodes: [
 								{
 									tag: 'ul',
