@@ -108,7 +108,7 @@
 	cursor: pointer;
 }
 
-.mp-selectable li:hover,
+.mp-selectable li:not(.mp-item-selected):hover,
 .mp-selected li:hover {
 	background: #ecf6fd;
 }
@@ -122,4 +122,9 @@
 /*  */
 .hidden {
 	display: none;
+}
+
+.mp-item-selected {
+	color: #cccccc;
+	cursor: not-allowed !important;
 }
